@@ -165,25 +165,20 @@ function SaveInterface(PlanetInterface) {
     };
 
     this.saveHTMLNoPrompt = function() {
-        setTimeout(
-            function() {
-                var html =
-                    "data:text/plain;charset=utf-8," +
-                    encodeURIComponent(this.prepareHTML());
-                if (this.PlanetInterface !== undefined) {
-                    this.downloadURL(
-                        this.PlanetInterface.getCurrentProjectName() + ".html",
-                        html
-                    );
-                } else {
-                    this.downloadURL(
-                        _("My Project").replace(" ", "_") + ".html",
-                        html
-                    );
-                }
-            }.bind(this),
-            500
-        );
+        var html =
+            "data:text/plain;charset=utf-8," +
+            encodeURIComponent(this.prepareHTML());
+        if (this.PlanetInterface !== undefined) {
+            this.downloadURL(
+                this.PlanetInterface.getCurrentProjectName() + ".html",
+                html
+            );
+        } else {
+            this.downloadURL(
+                _("My Project").replace(" ", "_") + ".html",
+                html
+            );
+        }
     };
 
     this.saveSVG = function(filename) {
@@ -492,25 +487,21 @@ function SaveInterface(PlanetInterface) {
                 // The following section of code is a bit of a hack. In order to detect the user selecting
                 // "Cancel", we attempt to perform an action that would otherwise be blocked. That is, if the
                 // user does not cancel the navigation, the HTTP request will fail, and the prompt never shown.
-                setTimeout(
-                    function() {
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("GET", document.location.href, true);
-                        xhr.onreadystatechange = function() {
-                            if (xhr.readyState === xhr.DONE) {
-                                if (
-                                    confirm(
-                                        _("Do you want to save your project?")
-                                    )
-                                ) {
-                                    this.saveHTMLNoPrompt();
-                                    this.timeLastSaved = this.PlanetInterface.getTimeLastSaved();
-                                }
-                            }
-                        }.bind(this);
-                        xhr.send();
-                    }.bind(this)
-                );
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", document.location.href, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === xhr.DONE) {
+                        if (
+                            confirm(
+                                _("Do you want to save your project?")
+                            )
+                        ) {
+                            this.saveHTMLNoPrompt();
+                            this.timeLastSaved = this.PlanetInterface.getTimeLastSaved();
+                        }
+                    }
+                }.bind(this);
+                xhr.send();
 
                 e.preventDefault();
                 e.returnValue = "";
