@@ -556,8 +556,10 @@ class Logo {
         }
 
         Singer.setMasterVolume(logo, DEFAULTVOLUME);
-        for (let synth in this.synthVolume[turtle]) {
-            Singer.setSynthVolume(this, turtle, synth, DEFAULTVOLUME);
+        for (let turtle in this.turtles.turtleList) {
+            for (let synth in this.turtles.ithTurtle(turtle).singer.synthVolume) {
+                Singer.setSynthVolume(this, turtle, synth, DEFAULTVOLUME);
+            }
         }
 
         this.synth.start();
@@ -728,7 +730,7 @@ class Logo {
     }
 
     /**
-     * Sets a single dispatch block.
+     * Sets a listener to the triggering (dispatch) block (usually the hidden block) for a clamp block.
      *
      * @param blk
      * @param turtle
@@ -1234,16 +1236,12 @@ class Logo {
         this._meterBlock = null;
 
         // Remove any listeners that might be still active
-        for (let turtle in this.turtles.turtleList) {
-            for (let listener in this.turtles.turtleList[turtle].listeners) {
-                this.stage.removeEventListener(
-                    listener,
-                    this.turtles.turtleList[turtle].listeners[listener],
-                    false
-                );
+        for (let turtle of this.turtles.turtleList) {
+            for (let listener in turtle.listeners) {
+                this.stage.removeEventListener(listener, turtle.listeners[listener], false);
             }
 
-            this.turtles.turtleList[turtle].listeners = {};
+            turtle.listeners = {};
         }
 
         // Init the graphic state
