@@ -303,10 +303,11 @@ function setupMediaBlocks() {
             this.formBlock({
                 outType: "fileout"
             });
+	    this.parameter = false;
         }
 
-        arg() {
-            // No need to do anything here.
+        arg(logo, turtle, blk, receivedArg) {
+	    return logo.blocks.blockList[blk].value;
         }
     }
 

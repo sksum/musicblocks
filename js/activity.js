@@ -218,7 +218,12 @@ function Activity() {
     if (_THIS_IS_MUSIC_BLOCKS_) {
         let MUSICBLOCKS_EXTRAS = [
             "Tone",
+            "activity/js-export/export",
+            "activity/js-export/sample",
+            "activity/js-export/GraphicsBlocksAPI",
+            "activity/js-export/PenBlocksAPI",
             "widgets/widgetWindows",
+            "widgets/jseditor",
             "widgets/modewidget",
             "widgets/meterwidget",
             "widgets/pitchtimematrix",
@@ -2307,6 +2312,9 @@ function Activity() {
     let keyboardEnableFlag;
 
     function __keyPressed(event) {
+        if (window.widgetWindows.isOpen("JavaScript Editor") === true)
+            return;
+
         let that = this;
         let disableKeys;
 
@@ -4220,6 +4228,14 @@ function Activity() {
     //     p.popdown();
     // };
 
+    /**
+     * Toggles display of javaScript editor widget.
+     */
+    _toggleJSWindow = () => {
+        let jsEditor = new JSEditor();
+        jsEditor.init();
+    };
+
     /*
      * Shows help page
      */
@@ -5014,6 +5030,7 @@ function Activity() {
         toolbar.renderMergeIcon(_doMergeLoad);
         toolbar.renderRestoreIcon(_restoreTrash);
         toolbar.renderChooseKeyIcon(chooseKeyMenu);
+        toolbar.renderJavaScriptIcon(_toggleJSWindow);
         toolbar.renderLanguageSelectIcon(languageBox);
         toolbar.renderWrapIcon();
 
