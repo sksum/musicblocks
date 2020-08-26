@@ -169,7 +169,6 @@ class Logo {
 
         this.temperamentSelected = [];
         this.customTemperamentDefined = false;
-        this.specialArgs = [];
 
         if (_THIS_IS_MUSIC_BLOCKS_) {
             // Load the default synthesizer
@@ -1521,10 +1520,6 @@ class Logo {
                             receivedArg
                         )
                     );
-                }
-                if (logo.turtles.ithTurtle(turtle).singer.inNoteBlock.length > 0 && 
-                    ["pitchinhertz","currentpitch"].indexOf(logo.blocks.blockList[logo.blocks.blockList[blk].connections[i]].name) !== -1) {
-                    logo.specialArgs.push([args, logo, turtle, blk, receivedArg, null, isflow]);  //redo after noteBlock Ends
                 }
             }
         }
