@@ -136,7 +136,18 @@ class Turtles {
         let i = this.turtleList.length % 10;    // used for turtle (mouse) skin color
         this.turtleList.push(turtle);           // add new turtle to turtle list
 
-        this.createArtwork(turtle, i);
+        if (startBlock.name === "start") {
+            this.createArtwork(turtle, i, true);
+        } else {
+            // Search for companion and use that turtle's colors.
+            for (let j = 0; j < this.turtleList.length; j++) {
+                if (this.turtleList[j].companionTurtle === this.turtleList.length - 1) {
+                    i = j % 10;
+                    break;
+                }
+            }
+            this.createArtwork(turtle, i, false);
+        }
 
         this.createHitArea(turtle);
 
@@ -667,8 +678,8 @@ Turtles.TurtlesView = class {
      * @param {Number} i
      * @returns {void}
      */
-    createArtwork(turtle, i) {
-        let artwork = TURTLESVG;
+    createArtwork(turtle, i, useTurtleArtwork) {
+        let artwork = useTurtleArtwork ? TURTLESVG : METRONOMESVG;
         artwork = sugarizerCompatibility.isInsideSugarizer() ?
             artwork
                 .replace(/fill_color/g, sugarizerCompatibility.xoColor.fill)
@@ -680,7 +691,7 @@ Turtles.TurtlesView = class {
                 .replace(/fill_color/g, FILLCOLORS[i])
                 .replace(/stroke_color/g, STROKECOLORS[i]);
 
-        turtle.makeTurtleBitmap(artwork, this.refreshCanvas);
+        turtle.makeTurtleBitmap(artwork, this.refreshCanvas, useTurtleArtwork);
 
         turtle.painter.color = i * 10;
         turtle.painter.canvasColor = getMunsellColor(
