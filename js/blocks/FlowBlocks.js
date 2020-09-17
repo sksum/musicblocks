@@ -260,9 +260,12 @@ function setupFlowBlocks() {
             this.formBlock({
                 name: _("default")
             });
+
+	    this.updateDockValue(0, "caseout");
+	    this.updateDockValue(2, "casein");
         }
 
-        flow(args, logo, turtle) {
+        flow(args, logo, turtle, blk) {
             let switchBlk = last(logo.switchBlocks[turtle]);
             if (switchBlk === null) {
                 logo.errorMsg(
@@ -295,9 +298,12 @@ function setupFlowBlocks() {
                 args: 1,
                 argTypes: ["anyin"]
             });
+
+	    this.updateDockValue(0, "caseout");
+	    this.updateDockValue(3, "casein");
         }
 
-        flow(args, logo, turtle) {
+        flow(args, logo, turtle, blk) {
             let switchBlk = last(logo.switchBlocks[turtle]);
             if (switchBlk === null) {
                 logo.errorMsg(
@@ -337,6 +343,8 @@ function setupFlowBlocks() {
                 [4, "defaultcase", 0, 0, [2, null, null]],
                 [5, "hidden", 0, 0, [0, null]]
             ]);
+
+	    this.updateDockValue(2, "casein");
         }
 
         flow(args, logo, turtle, blk) {

@@ -664,7 +664,7 @@ function PitchTimeMatrix() {
         this._lookForNoteBlocksOrRepeat();
 
         // Sort them if there are note blocks.
-        if (!this.sorted && this._noteBlocks) {
+        if (!this.sorted) {
             setTimeout(function() {
                 console.debug("sorting");
                 that._sort();
@@ -2346,7 +2346,7 @@ function PitchTimeMatrix() {
 
             if (i === 0) {
                 this._sortedRowMap.push(0);
-            } else if (i > 0 && obj[1] === last(this.rowLabels)) {
+            } else if (i > 0 && obj[1] !== "hertz" && obj[1] === last(this.rowLabels)) {
                 console.debug(
                     "skipping " + obj[1] + " " + last(this.rowLabels)
                 );
@@ -4877,7 +4877,7 @@ function PitchTimeMatrix() {
                         }
                     }
 
-                    if (typeof note[0][j] === "number") {
+                    if (!isNaN(parseInt(note[0][j]))) {
                         var obj = null;
                         var drumName = null;
                     } else {
@@ -4885,7 +4885,7 @@ function PitchTimeMatrix() {
                         var drumName = getDrumName(note[0][j]);
                     }
 
-                    if (obj == null) {
+                    if (obj === null) {
                         // add a hertz block
                         // The last connection in last pitch block is null.
                         if (note[0].length === 1 || j === note[0].length - 1) {
@@ -4903,7 +4903,7 @@ function PitchTimeMatrix() {
                         ]);
                         newStack.push([
                             thisBlock + 1,
-                            ["number", { value: note[0][j] }],
+                            ["number", { value: parseInt(note[0][j]) }],
                             0,
                             0,
                             [thisBlock]
