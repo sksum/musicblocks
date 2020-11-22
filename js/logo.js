@@ -105,6 +105,7 @@ class Logo {
         this.actions = {};
         this.returns = {};
         this.turtleHeaps = {};
+        this.turtleDicts = {};
 
         // We store each case arg and flow by switch block no. and turtle
         this.switchCases = {};
@@ -1598,7 +1599,7 @@ class Logo {
             }
         }
 
-        if (typeof logo.blocks.blockList[blk].protoblock.flow === "function") {
+        if (!logo.blocks.blockList[blk].isArgBlock()) {
             let res = logo.blocks.blockList[blk].protoblock.flow(
                 args, logo, turtle, blk, receivedArg, actionArgs, isflow
             );
@@ -1769,7 +1770,11 @@ class Logo {
                             if (
                                 tur.butNotThese[b] == null || tur.butNotThese[b].indexOf(i) === -1
                             ) {
-                                logo.stage.dispatchEvent(tur.endOfClampSignals[b][i]);
+                                if (tur.singer.runningFromEvent) {
+                                    console.log('RUNNING FROM EVENT');
+                                } else {
+                                    logo.stage.dispatchEvent(tur.endOfClampSignals[b][i]);
+                                }
                             }
                         }
                     }
@@ -1839,6 +1844,7 @@ class Logo {
                     logo._lastNoteTimeout = setTimeout(() => {
                         console.debug("LAST NOTE PLAYED");
                         logo._lastNoteTimeout = null;
+                        tur.singer.runningFromEvent = false;
                         if (tur.singer.suppressOutput && logo.recording) {
                             tur.singer.suppressOutput = false;
                             logo._checkingCompletionState = false;

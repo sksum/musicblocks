@@ -57,8 +57,10 @@ const BUILTINPALETTES = [
     "media",
     "sensors",
     "heap",
+    "dictionary",
     "ensemble",
     "extras",
+    "program",
     "myblocks"
 ];
 
@@ -83,8 +85,11 @@ const BUILTINPALETTESFORL23N = [
     _("media"),
     _("sensors"),
     _("heap"),
+    _("dictionary"),
     _("ensemble"),
     _("extras"),
+    //.TRANS: program as in computer program
+    _("program"),
     _("my blocks")
 ];
 
@@ -108,14 +113,16 @@ const MULTIPALETTES = [
         "number",
         "boolean",
         "heap",
+        "dictionary",
         "extras",
+	"program",
         "myblocks"
     ],
     ["graphics", "pen", "media", "sensors", "ensemble"]
 ];
 
 // Skip these palettes in beginner mode.
-const SKIPPALETTES = ["heap", "extras"];
+const SKIPPALETTES = ["heap", "dictionary", "extras", "program"];
 
 // Icons used to select between multipalettes.
 const MULTIPALETTEICONS = ["music", "logic", "artwork"];

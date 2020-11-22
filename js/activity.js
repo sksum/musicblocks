@@ -154,18 +154,22 @@ function Activity() {
 
         if (localStorage.languagePreference !== undefined) {
             try {
+		console.log(localStorage.languagePreference);
                 lang = localStorage.languagePreference;
                 document.webL10n.setLanguage(lang);
+		console.log('SUCCESS');
             } catch (e) {
                 console.debug(e);
             }
         } else {
             // document.webL10n.getLanguage();
             lang = navigator.language;
+	    console.log(lang);
             if (lang.indexOf("-") !== -1) {
                 lang = lang.slice(0, lang.indexOf("-"));
                 document.webL10n.setLanguage(lang);
             }
+	    console.log('ELSE');
         }
     } catch (e) {
         console.debug(e);
@@ -275,7 +279,9 @@ function Activity() {
             "activity/blocks/BoxesBlocks",
             "activity/blocks/BooleanBlocks",
             "activity/blocks/HeapBlocks",
+            "activity/blocks/DictBlocks",
             "activity/blocks/ExtrasBlocks",
+            "activity/blocks/ProgramBlocks",
             "activity/blocks/GraphicsBlocks",
             "activity/blocks/PenBlocks",
             "activity/blocks/MediaBlocks",
@@ -859,6 +865,7 @@ function Activity() {
         logo.notationOutput = "";
         for (let turtle = 0; turtle < turtles.turtleList.length; turtle++) {
             logo.turtleHeaps[turtle] = [];
+            logo.turtleDicts[turtle] = {};
             logo.notation.notationStaging[turtle] = [];
             logo.notation.notationDrumStaging[turtle] = [];
             if (noErase === undefined || !noErase) {
@@ -2016,13 +2023,18 @@ function Activity() {
 
         for (i in blocks.protoBlockDict) {
             let block = blocks.protoBlockDict[i];
-            blockLabel = block.staticLabels.join(' ');
+            let blockLabel = block.staticLabels.join(' ');
             let artwork = block.palette.model.makeBlockInfo(0, block, block.name, block.name)["artwork64"];
-            if (blockLabel) {
+            if (blockLabel || block.extraSearchTerms !== undefined) {
                 if (block.deprecated) {
                     deprecatedBlockNames.push(blockLabel);
                 } else {
                     searchSuggestions.push({label: blockLabel, value: block.name, specialDict: block, artwork: artwork});
+                    if (block.extraSearchTerms !== undefined) {
+                        for (let i = 0; i < block.extraSearchTerms.length; i++) {
+                            searchSuggestions.push({label: block.extraSearchTerms[i], value: block.name, specialDict: block, artwork: artwork});
+                        }
+                    }
                 }
             }
         }
@@ -3431,6 +3443,7 @@ function Activity() {
                         turtle++
                     ) {
                         logo.turtleHeaps[turtle] = [];
+                        logo.turtleDicts[turtle] = {};
                         logo.notation.notationStaging[turtle] = [];
                         logo.notation.notationDrumStaging[turtle] = [];
                         turtles.turtleList[turtle].painter.doClear(true, true, false);
@@ -4697,6 +4710,7 @@ function Activity() {
             };
 
             this.showMusicBlocks = function() {
+                document.title = planet.getCurrentProjectName();
                 document.getElementById("toolbars").style.display = "block";
                 document.getElementById("palette").style.display = "block";
 
@@ -5176,7 +5190,9 @@ function Activity() {
                                         stage.removeAllEventListeners(
                                             "trashsignal"
                                         );
-                                        planet.saveLocally();
+					if (planet) {
+                                            planet.saveLocally();
+					}
                                     };
 
                                     stage.addEventListener(

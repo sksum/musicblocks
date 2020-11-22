@@ -64,9 +64,11 @@ also available.
     10. [Custom Timbres](#timbre)
     11. [Music Keyboard](#keyboard)
     12. [Changing Temperament](#temperament)
+    13. [Oscilloscope](#oscilloscope)
 5. [Beyond Music Blocks](#BEYOND-MUSIC-BLOCKS)
     1. [LilyPond](#LILYPOND)
-    2. [JavaScript](#JAVASCRIPT)
+    2. [Other exports](#EXPORTS)
+    3. [JavaScript](#JAVASCRIPT)
 
 [APPENDIX: Palette Tables](#APPENDIX_1)
 
@@ -1307,7 +1309,7 @@ Much of music involves multiple instruments (voices or "mice" in Music
 Blocks) playing together. There are a number of special blocks that
 can be used to coordinate the actions of an ensemble of mice.
 
-This secction will guide about different ensemble blocks, which
+This section will guide about different ensemble blocks, which
 communicate the status of mice by name, including notes played,
 current pen color, pitch number, etc.
 
@@ -1331,43 +1333,39 @@ location for a specified mouse.
  tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/turtleheap_block.svg
  "mouse heap index")
 
-The *Mouse elapse notes* block returns the number of notes played by the
-specified mouse.
+You can use the dictionary entries to data between mice. The *Get
+value* block lets you specify a mouse name and the value you want to
+access. For example, you can access a mouse's pen attributes, such as
+color, shade, and grey values.
 
 ![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/turtleelapsednotes_block.svg
- "mouse notes played")
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/dictionary-pen.svg
+ "mouse pen attributes")
 
-The *Mouse pitch block* returns the current pitch number being played by
-the specified mouse.
-
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/turtlepitch_block.svg
- "mouse pitch number")
-
-The *X mouse* block returns the X position of the specified mouse.
+You can also access the mouse's graphics attributes, such as x, y, and
+heading. You can also set attributes of a mouse using the *Set value*
+block. In the example, a mouse's heading is set to 90.
 
 ![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/xturtle_block.svg
- "mouse x")
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/dictionary-graphics.svg
+ "mouse graphics attributes")
 
-The *Y mouse* block returns the Y position of the specified mouse.
-
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/yturtle_block.svg
- "mouse y")
-
-The *Mouse heading* block returns the heading of the specified mouse.
+Some music status is also available through the dictionary. You can
+access a mouse's "current pitch", "pitch number", "note value", the
+number of "notes played".
 
 ![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/turtleheading_block.svg
- "mouse heading")
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/dictionary-music.svg
+ "mouse music attributes")
 
-The *Mouse color* block returns the pen color of the specified mouse.
+The dictionary can be used to share other things too. Just set a
+*key/value* pair with one mouse and access it from another.
 
 ![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/turtlecolor_block.svg
- "mouse color")
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/dictionary-key.svg
+ "sharing key/value pairs")
+
+Other Ensemble blocks include:
 
 The *Found mouse* block will return true if the specified mouse can be found.
 
@@ -1517,8 +1515,8 @@ e.g., x, y, heading, color, shade, grey, and pensize.
  "additional programming within the Status block")
 
 You can do additional programming within the status block. In the
-example above, `whole notes played` is divided by `4` (e.g. quarter notes)
-before being displayed.
+example above, `whole notes played` is multiplied by `4` (to calculate
+quarter notes played) before being displayed.
 
 ### <a name="GENERATION"></a>4.2 Generating Chunks of Notes 
 
@@ -1882,7 +1880,7 @@ the mode is changed inside the widget.
  tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/mode3.svg
  "creating Dorian mode")
 
-In the above example, the *Major* mode has been rotated clockwise,
+In the above example, the *Major* mode has been rotated counter-clockwise,
 transforming it into *Dorian*.
 
 ![alt
@@ -1890,7 +1888,7 @@ transforming it into *Dorian*.
  "creating Locrian mode")
 
 In the above example, the *Major* mode has been rotated
-counter-clockwise, transforming it into *Locrian*.
+clockwise, transforming it into *Locrian*.
 
 ![alt
  tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/mode5.svg
@@ -1975,7 +1973,7 @@ sample. In the example above, a `kick drum` will be substitued for
 each occurance of a `Re` `4`.
 
 ![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/drum8.svg
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/drum5a.svg
  "pitch-drum matrix 1")
 
 ![alt
@@ -2152,12 +2150,6 @@ The *Timbre* widget has a number of different panels, each of which is
 used to set the parameters of the components that define your custom
 timbre.
 
-From left to right:
-
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/timbre2a.svg
- "the play button")
-
 * The *Play* button, which lets you test the sound quality of your
 custom timbre. By default, it will play `Sol`, `Mi`, `Sol` using the
 combination of filters you define.
@@ -2168,10 +2160,6 @@ combination of filters you define.
 
 You can also put notes in the *Timbre* block to use for testing your
 sound. In the example above, a scale will be used for the test.
-
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/timbre2b.svg
- "the save button")
 
 * The *Save* button, which will save your custom timbre for use in
 your program.
@@ -2201,6 +2189,9 @@ envelope, with controls for attack, decay, sustain, and release.
 ![alt
  tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/timbre6.svg
  "select effect")
+![alt
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/timbre6a.svg
+ "tremolo")
 
 * The *Effects* button, which lets you add effects to your custom
 timbre: tremelo, vibrato, chorus, phaser, and distortion. When an
@@ -2213,30 +2204,10 @@ effect is selected, additional controls will appear in the widget.
 * The *Filter* button, which lets you choose between a number of
 different filter types.
 
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/timbre2c.svg
- "the add filter button")
-
 * The *Add filter* button, which lets you add addition filters to your
 custom timbre.
 
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/timbre2d.svg
- "the undo button")
-
 * The *Undo* button.
-
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/timbre2e.svg
- "the close button")
-
-* The *Close* button.
-
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/timbre2f.svg
- "the drag handle")
-
-* The *Drag* handle.
 
 As you add synthesizers, effects, and filters with the widget, blocks
 corresponding to your choices are added to the *Timbre* block. This
@@ -2261,18 +2232,14 @@ all keys between C4 and G5 is created.
 When there are *Pitch* blocks inside the widget clamp, a keyboard with
 only those pitches is created.
 
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/keyboard3.svg
- "keyboard block with pitch block in clamp")
-
-![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/keyboard4.svg
- "keyboard widget with pitch block in clamp")
-
 Click on the keys to hear sounds. Click on the Play button to playback
 all of the notes played. Click on the Save button to output code (a
 series of *Note* blocks). The Clear button is used to delete all keys
 pressed previously in order to start new.
+
+The MIDI input allows for a using a MIDI device to generate notes.
+
+The metronome feature will generate a beat to enable candence.
 
 ###  <a name="temperament"></a>4.12 Changing Temperament
 
@@ -2340,7 +2307,9 @@ The *Add* button is used to edit notes through different tools:
 
 ![alt
  tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/temperament4.svg
- "Equal Edit tool")
+ "Equal Edit tool") ![alt
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/temperament4a.svg
+ "Temperament widget with new element")
 
 The `Equal` edit tool is used to make *equal divisions* between two
 pitch numbers.  In the above example, two equal divisions are made
@@ -2348,8 +2317,10 @@ between pitch numbers `0` and `1` and the resultant number of notes
 within an octave are changed from 12 to 13.
 
 ![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/temperament4.svg
- "Ratio Edit tool")
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/temperament5.svg
+ "Ratio Edit tool") ![alt
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/temperament5a.svg
+ "Temperament widget with new element")
 
 The `Ratio` tool is used to add notes of specified ratios in such a
 way that the resultant pitches wrap inside a single octave. Recursion
@@ -2360,7 +2331,7 @@ of first pitch is (Starting Pitch Frequency) * (16/13) and second
 pitch is (Starting Pitch Frequency) * (16/13)².
 
 ![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/temperament4.svg
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/temperament6.svg
  "Arbitrary Edit tool")
 
 The `Arbitrary` edit tool is used to add a note in an arbitrary
@@ -2371,7 +2342,7 @@ will be added somewhere between pitch numbers `2` and `3` by adjusting
 the frequency slider.
 
 ![alt
- tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/temperament4.svg
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/temperament7.svg
  "Octave Space Edit tool")
 
 The `Octave Space` tool is used to edit the octave ratio. The standard
@@ -2381,6 +2352,19 @@ changed to 3:1 after clicking on `Done`.
 The *Drag* button will drag the widget.
 
 The *Close* button will close the widget.
+
+###  <a name="oscilloscope"></a>4.13 Oscilloscope
+
+Music Blocks has an Oscillosope Widget to visualize the music as it plays.
+
+![alt
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/oscilloscope1.svg
+ "Oscilloscope")
+![alt
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/guide/oscilloscope2.svg
+ "Oscilloscope")
+
+A separate wave will be displayed for each mouse.
 
 ## <a name="BEYOND-MUSIC-BLOCKS"></a>5. Beyond Music Blocks
 
@@ -2435,7 +2419,42 @@ e'4 e'4 d'8 d'8 d'8 d'8 d'4 d'4 c'8 c'8 c'8 c'8 c'4 c'4
 
 [RUN LIVE](https://musicblocks.sugarlabs.org/index.html?id=1523043053377623&run=True)
 
-## <a name="JAVASCRIPT"></a>5.2 JavaScript
+## <a name="EXPORTS"></a>5.2 Other Exports
+
+In addition to Lilypond, there are several other export formats
+supported, including ABC, MusicXML, WAV, SVG, and PNG.
+
+**ABC** notation is a shorthand form of musical notation. In basic
+form it uses the letters A through G, letter notation, to represent
+the given notes, with other elements used to place added value on
+these – sharp, flat, the length of the note, key, ornamentation (See
+https://en.wikipedia.org/wiki/ABC_notation).
+
+**MusicXML** is an XML-based file format for representing Western
+musical notation. The format is open, fully documented, and can be
+freely used under the W3C Community Final Specification Agreement
+(See https://en.wikipedia.org/wiki/MusicXML).
+
+**WAV** (Waveform Audio File Format) is an audio file format standard,
+developed by IBM and Microsoft, for storing an audio bitstream on
+PCs (See https://en.wikipedia.org/wiki/WAV).
+
+**PNG** (Portable Network Graphics) is a raster-graphics file format
+that supports lossless data compression (See
+https://en.wikipedia.org/wiki/Portable_Network_Graphics). You can
+save your artwork as PNG.
+
+**SVG** (Scalable Vector Graphics) is an Extensible Markup Language
+(XML)-based vector image format for two-dimensional graphics with
+support for interactivity and animation (See
+https://en.wikipedia.org/wiki/Scalable_Vector_Graphics). You can
+also save your artwork as SVG.
+
+Note that artwork saved as PNG or SVG can subsequently be imported
+into Music Blocks to be used with either the *Show* or *Avatar*
+blocks.
+
+## <a name="JAVASCRIPT"></a>5.3 JavaScript
 
 There are practical limits to the size and complexity of Music Blocks
 programs. At some point we expect Music Blocks programmers to move on
@@ -2540,7 +2559,7 @@ Looking for a block? The tables below (one for beginner mode and one for advance
 | Tone | set instrument | | | | | | cursor y |
 | | vibrato | | | | | | click |
 | | chorus | | | | | | loudness |
-| | termolo | | | | | Ensemble | set name |
+| | tremolo | | | | | Ensemble | set name |
 | Ornament | staccato | | | | | | mouse name |
 | | slur | | | | 
 | | neighbor (+/-) | | | | 

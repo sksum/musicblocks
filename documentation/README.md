@@ -28,14 +28,13 @@ Getting Started
 ![alt tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/getting_started_blocks.svg "default blocks")
 
 When you first launch Music Blocks in your browser, you'll see a stack
-of blocks representing four notes: `Do 4`, `Mi 4`, `Sol 4` and `Do
-5`. The first note is a `1/2` note; the second and third notes are
-`1/4` notes; the fourth note is a `1/1` note.
+of blocks representing the notes: `Sol 4`, `Mi 4`and `Sol 4`. The first two notes are `1/4` note; third note is 
+`1/2` note.
 
 ![alt tag](https://rawgithub.com/sugarlabs/musicblocks/master/header-icons/play-button.svg "play button")
 
 Try clicking on the *Start* block or click on the *Play* button. You
-should hear the notes play in succession: `Do` `Mi` `Sol` `Do`.
+should hear the notes play in succession: `Sol` `Mi` `Sol`.
 
 To write your own programs, drag blocks from their respective palettes
 on the left side of the screen. Use multiple blocks in stack(s) to
@@ -335,7 +334,20 @@ of the input form are then transferred to *Input-value* block.
 
 The *Push* and *Pop* blocks, found on the *Heap* palette, are used to
 store and retrieve values on/from a first-in, last-out (FILO) program
-heap.
+heap. There is a separate heap maintained for each *Start* block.
+
+![alt tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/getDict_block.svg "get value")
+
+![alt tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/setDict_block.svg "set value")
+
+The *Get value* and *Set value* blocks are found on the *Dictionary*
+palette. They are used to get and set values in a dictionary
+object. You can have as many key/value pairs as you'd like in the
+dictionary and you can have as many dictionaries as you'd like as
+well. There is also a built-in dictionary associated with each *Start*
+block that has key/value pairs for parameters such as x, y, heading,
+color, shade, grey, pen size, notes played, current pitch, pitch
+number, and note value.
 
 ![alt tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/print_block.svg "print")
 
@@ -449,6 +461,16 @@ the chunk in the clamp of the *Pitch-time Marix* block.
 
 More details about all of the widgets are available in the
 [Music Blocks Programming Guide](http://github.com/sugarlabs/musicblocks/tree/master/guide/README.md).
+
+Stats
+-----
+
+Project statistics are available from a button the the secondary
+toolbar in advanced mode.
+
+![alt
+ tag](https://rawgithub.com/sugarlabs/musicblocks/master/documentation/stats.svg
+ "Stats Details")
 
 Planet View 
 -----------

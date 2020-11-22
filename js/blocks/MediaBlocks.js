@@ -191,6 +191,24 @@ function setupMediaBlocks() {
         }
     }
 
+    class ClearMediaBlock extends FlowBlock {
+        constructor() {
+            //.TRANS: Erases the images and text
+            super("erasemedia", _("erase media"));
+            this.setPalette("media");
+            this.setHelpString([
+                _("The Erase Media block erases text and images."),
+                "documentation",
+                ""
+            ]);
+        }
+
+        flow(args, logo, turtle, blk) {
+            let tur = logo.turtles.ithTurtle(turtle);
+            tur.painter.doClearMedia();            
+        }
+    }
+
     class PlaybackBlock extends FlowBlock {
         constructor() {
             //.TRANS: play an audio recording
@@ -200,7 +218,7 @@ function setupMediaBlocks() {
             this.formBlock({
                 args: 1,
                 defaults: [null],
-                argTypes: ["medain"]
+                argTypes: ["mediain"]
             });
 
             this.hidden = true;
@@ -303,11 +321,11 @@ function setupMediaBlocks() {
             this.formBlock({
                 outType: "fileout"
             });
-	    this.parameter = false;
+            this.parameter = false;
         }
 
         arg(logo, turtle, blk, receivedArg) {
-	    return logo.blocks.blockList[blk].value;
+            return logo.blocks.blockList[blk].value;
         }
     }
 
@@ -333,6 +351,8 @@ function setupMediaBlocks() {
         constructor() {
             super("tone", _("hertz"));
             this.setPalette("media");
+            this.piemenuValuesC1 = [220, 247, 262, 294, 330, 349, 392, 440, 494, 523,
+                                    587, 659, 698, 784, 880];
             this.setHelpString();
             this.formBlock({
                 args: 2,
@@ -636,6 +656,7 @@ function setupMediaBlocks() {
     new ToneBlock().setup();
     new ToFrequencyBlock().setup();
     new TurtleShellBlock().setup();
+    new ClearMediaBlock().setup();
     new ShowBlock().setup();
     new MediaBlock().setup();
     new TextBlock().setup();
